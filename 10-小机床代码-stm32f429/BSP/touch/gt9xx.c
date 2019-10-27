@@ -14,12 +14,9 @@
   *
   ******************************************************************************
   */ 
-#include <stdio.h>
-#include <string.h>
+
 #include "./touch/gt9xx.h"
-#include "./touch/bsp_i2c_touch.h"
-#include "./lcd/bsp_lcd.h"
-#include "./touch/palette.h"
+
 
 // 5寸屏GT9157驱动配置
 uint8_t CTP_CFG_GT9157[] ={ 
@@ -292,7 +289,7 @@ static void GTP_Touch_Down(int32_t id,int32_t x,int32_t y,int32_t w)
 
 	
     /* 处理触摸按钮，用于触摸画板 */
-    Touch_Button_Down(x,y); 
+    Touch_Button_Down(x, y); 
 	
 
     /*处理描绘轨迹，用于触摸画板 */

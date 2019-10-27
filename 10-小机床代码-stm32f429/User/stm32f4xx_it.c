@@ -34,7 +34,7 @@
 #include "./usart/bsp_debug_usart.h"
 #include "./touch/bsp_i2c_touch.h"
 #include "./system/system.h"
-#include "./samplestatus/samplestatus.h"
+#include "./sample_status/sample_status.h"
 #include "./motor/MicroStepDriver.h" 
 
 extern SystemState CurrState;

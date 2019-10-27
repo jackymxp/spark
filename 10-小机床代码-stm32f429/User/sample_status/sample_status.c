@@ -1,4 +1,4 @@
- #include "./samplestatus/samplestatus.h"
+ #include "./sample_status/sample_status.h"
 
  /**
   * @brief  基本定时器 TIMx,x[6,7]中断优先级配置
@@ -106,7 +106,7 @@ void Sample_TIM_Configuration(uint32_t sampleFrequency)
 	Sample_GPIO_Config();
 	TIMx_NVIC_Configuration();	
   
-  Sample_TIM_Mode_Config(sampleFrequency);
+	Sample_TIM_Mode_Config(sampleFrequency);
 }
 
 /*********************************************END OF FILE**********************/

@@ -16,9 +16,6 @@
   */ 
 
 #include "./touch/bsp_i2c_touch.h"
-#include "./touch/gt9xx.h"
-#include "./usart/bsp_debug_usart.h"
-
 
 /* STM32 I2C 快速模式 */
 #define I2C_Speed              400000
@@ -220,28 +217,6 @@ void I2C_ResetChip(void)
 	  GPIO_Init(GTP_INT_GPIO_PORT, &GPIO_InitStructure);
 }
 
-/**
-  * @brief  I2C 工作模式配置
-  * @param  无
-  * @retval 无
-  */
-static void I2C_Mode_Config(void)
-{
-  I2C_InitTypeDef  I2C_InitStructure; 
-
-  /* I2C 模式配置 */
-  I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;	
-  I2C_InitStructure.I2C_DutyCycle = I2C_DutyCycle_2;		                    
-  I2C_InitStructure.I2C_OwnAddress1 =I2C_OWN_ADDRESS7;
-  I2C_InitStructure.I2C_Ack = I2C_Ack_Enable ;	
-  I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;	/* I2C的寻址模式 */
-  I2C_InitStructure.I2C_ClockSpeed = I2C_Speed;	                          /* 通信速率 */
-  I2C_Init(GTP_I2C, &I2C_InitStructure);	                                  /* I2C1 初始化 */
-  I2C_Cmd(GTP_I2C, ENABLE);  	                                              /* 使能 I2C1 */
-
-  I2C_AcknowledgeConfig(GTP_I2C, ENABLE);
-
-}
 
 
 /**

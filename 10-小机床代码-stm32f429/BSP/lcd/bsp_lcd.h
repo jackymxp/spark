@@ -813,7 +813,7 @@ void     LCD_Triangle(pPoint Points, uint16_t PointCount);
 void     LCD_FillTriangle(uint16_t x1, uint16_t x2, uint16_t x3, uint16_t y1, uint16_t y2, uint16_t y3);
 void     LCD_CtrlLinesWrite(GPIO_TypeDef* GPIOx, uint16_t CtrlPins, BitAction BitVal);
 void     PutPixel(int16_t x, int16_t y);
-void 		 LCD_DisplayStringLineEx(uint16_t x,uint16_t y,uint16_t Font_width,uint16_t Font_Heig,uint8_t *ptr,uint16_t DrawModel);
+void 	 LCD_DisplayStringLineEx(uint16_t x,uint16_t y,uint16_t Font_width,uint16_t Font_Heig,uint8_t *ptr,uint16_t DrawModel);
 
 
 

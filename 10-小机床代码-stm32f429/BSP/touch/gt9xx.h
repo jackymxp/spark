@@ -18,7 +18,13 @@
 #ifndef _GOODIX_GT9XX_H
 #define _GOODIX_GT9XX_H
 
+#include <stdio.h>
+#include <string.h>
 #include "stm32f4xx.h"
+#include "./touch/bsp_i2c_touch.h"
+#include "./touch/palette.h"
+
+
 
 #ifndef NULL
   #define NULL        0

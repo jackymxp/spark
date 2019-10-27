@@ -1,15 +1,30 @@
-#ifndef _PALETTE_H
-#define _PALETTE_H
+#ifndef _BUTTON_H
+#define _BUTTON_H
 
 #include "stm32f4xx.h"
 #include "./lcd/bsp_lcd.h"
  
+//每当增加一个按键的时候，就修改一下这个宏定义，否则就会进入中断执行hardfault err
+#define BUTTON_NUM    5
+
+
+typedef struct 
+{
+	uint16_t start_x;   //按键的x起始坐标  
+	uint16_t start_y;   //按键的y起始坐标
+	uint16_t end_x;     //按键的x结束坐标 
+	uint16_t end_y;     //按键的y结束坐标
+	uint16_t touch_num;      //按键被按下的次数，
+	uint8_t touch_flag;          //按着的时候为1，不按的时候为0，实时更新
+
+	void (*draw_btn)(void * btn);    	 //按键按下的时候描绘函数
+	void (*btn_command)(void * btn); 	 //按下按键功能执行函数，例如切换颜色、画刷
+}Touch_Button;
+
+
 
 #define COLOR_BLOCK_WIDTH   100
 #define COLOR_BLOCK_HEIGHT  (LCD_PIXEL_HEIGHT / 5)
-
-//每当增加一个按键的时候，就修改一下这个宏定义，否则就会进入中断执行hardfault err
-#define BUTTON_NUM    5
 
 
 #define PALETTE_START_Y   0
@@ -85,25 +100,16 @@ enum
 	CL_MASK			    = 0x7FFF	/* RGB565颜色掩码，用于文字背景透明 */
 };
 
-typedef struct 
-{
-	uint16_t start_x;   //按键的x起始坐标  
-	uint16_t start_y;   //按键的y起始坐标
-	uint16_t end_x;     //按键的x结束坐标 
-	uint16_t end_y;     //按键的y结束坐标
-	uint16_t touch_num;      //按键被按下的次数，
-	uint8_t touch_flag;          //按着的时候为1，不按的时候为0，实时更新
 
-	void (*draw_btn)(void * btn);    	 //按键按下的时候描绘函数
-	void (*btn_command)(void * btn); 	 //按下按键功能执行函数，例如切换颜色、画刷
-}Touch_Button;
+
+
 
 
  
 void Palette_Init(void);
-void Touch_Button_Init(void);
 void Touch_Button_Down(uint16_t x,uint16_t y);
 void Touch_Button_Up(uint16_t x,uint16_t y);
 
-#endif //_PALETTE_H
+
+#endif //_BUTTON_H
 

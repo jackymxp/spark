@@ -1,23 +1,16 @@
 #include "stm32f4xx.h"
 #include "./led/bsp_led.h"
-#include "./usart/bsp_debug_usart.h"
-#include "./sdram/bsp_sdram.h"
-#include "./lcd/bsp_lcd.h"
-#include "./touch/gt9xx.h"
-#include "./touch/palette.h"
-#include "./system/system.h"
 #include "./key/bsp_exti.h"
+#include "./lcd/bsp_lcd.h"
+#include "./usart/bsp_debug_usart.h"
+#include "./touch/palette.h"
+#include "./touch/gt9xx.h"
+
+
+#include "./system/system.h"
 #include "./motor/MicroStepDriver.h" 
+#include "./sample_status/sample_status.h"
 
-#include "./samplestatus/samplestatus.h"
-
-
-
-/*
-主要修改的文件
-palett.c 绘制图形文件
-system.c 系统状态变量
-*/
 
 extern SystemState CurrState;
 
@@ -37,9 +30,7 @@ int main(void)
 	LED_GPIO_Config();	
 
 	Debug_USART_Config();    
-	printf("\r\n野火STM3F429 触摸画板测试例程\r\n");
 
-	//	LED_BLUE;
 	/* 初始化触摸屏 */
 	GTP_Init_Panel(); 
 
@@ -61,9 +52,8 @@ int main(void)
 	/*调用画板函数*/
 	Palette_Init();
 
-	/* LED 端口初始化 */
-	LED_GPIO_Config();
-  	
+
+
 	
 	/* 步进电机引脚初始化 */
 	Motor_Config(CurrState.MotorState.MSDSpeed);
@@ -74,7 +64,6 @@ int main(void)
 	SpindleAndCoolant_GPIO_Config();
 	while(1)
 	{
-		LCD_DispString_EN_CH(50, 560, "电压：33V");
 		Scan_System();	
 		//Delay(0xffffff);
 	}

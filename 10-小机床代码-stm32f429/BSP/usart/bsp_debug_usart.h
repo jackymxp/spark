@@ -22,15 +22,14 @@
 #define DEBUG_USART_TX_SOURCE                   GPIO_PinSource9
 
 
-#define __DEBUG 	//¿ªÆô´®¿Úµ÷ÊÔ
-
-#ifdef  __DEBUG
-#define DEBUG(format,...)	printf("File:"__FILE__",Line:%03d:"format"\n",__LINE__,##__VA_ARGS__) 
-#else
-
-#define DEBUG(format,...)
-
-#endif
+#define DEBUG_ON         	1
+// Log define
+#define INFO(fmt,arg...)           printf("<<-INFO->> "fmt"\n",##arg)
+#define ERROR(fmt,arg...)          printf("<<-ERROR->> "fmt"\n",##arg)
+#define printk(fmt,arg...)          do{\
+                                         if(GTP_DEBUG_ON)\
+                                         printf("<<-DEBUG->> %s-->>%d-->>"fmt"\n", __func__, __LINE__, ##arg);\
+																					}while(0)
 
 
 void Debug_USART_Config(void);
