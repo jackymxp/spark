@@ -95,7 +95,7 @@ void Scan_System(void)
 			if(currentSpeed != ADJUSTSPEED)
 			{//这句话只执行一次就可以了，怎么搞。
 				CurrState.MotorState.MSDSpeed = ADJUSTSPEED;
-				Motor_Config(CurrState.MotorState.MSDSpeed);	
+				MotorSetSpeed(CurrState.MotorState.MSDSpeed);	
 			}
 			TIM_Cmd(MSD_PULSE_TIM, ENABLE);
 			//printf("CurrState.MotorState.MSDdir = %d\n",CurrState.MotorState.MSDdir);
@@ -115,9 +115,9 @@ void Scan_System(void)
 		uint16_t currentSpeed = CurrState.MotorState.MSDSpeed;
 		
 		if(CurrState.MotorState.MSDStep > 0)
-			TIM_Cmd(MSD_PULSE_TIM, ENABLE);
+			Motor_Cmd(ENABLE);
 		else
-			TIM_Cmd(MSD_PULSE_TIM, DISABLE);
+			Motor_Cmd(DISABLE);
 		
 		//判断转态
 		switch(CurrState.DischargeState)
@@ -126,7 +126,7 @@ void Scan_System(void)
 				if(currentSpeed !=  SHORTSPEED)
 				{//这句话只执行一次就可以了，怎么搞。
 					CurrState.MotorState.MSDSpeed = SHORTSPEED;
-					Motor_Config(CurrState.MotorState.MSDSpeed);			
+					MotorSetSpeed(CurrState.MotorState.MSDSpeed);			
 				}
 				CurrState.MotorState.MSDStep = SHORTSTEP;
 				DIR(MSD_UP);
@@ -136,7 +136,7 @@ void Scan_System(void)
 				if(currentSpeed !=  OPENSPEED)
 				{//这句话只执行一次就可以了，怎么搞。
 					CurrState.MotorState.MSDSpeed = OPENSPEED;
-					Motor_Config(CurrState.MotorState.MSDSpeed);			
+					MotorSetSpeed(CurrState.MotorState.MSDSpeed);			
 				}
 				CurrState.MotorState.MSDStep = OPENSTEP;
 				DIR(MSD_DOWN);
@@ -146,7 +146,7 @@ void Scan_System(void)
 				if(currentSpeed !=  SPARKSPEED)
 				{//这句话只执行一次就可以了，怎么搞。
 					CurrState.MotorState.MSDSpeed = SPARKSPEED;
-					Motor_Config(CurrState.MotorState.MSDSpeed);				
+					MotorSetSpeed(CurrState.MotorState.MSDSpeed);				
 				}
 				CurrState.MotorState.MSDStep = SPARKSTEP;
 				DIR(MSD_DOWN);

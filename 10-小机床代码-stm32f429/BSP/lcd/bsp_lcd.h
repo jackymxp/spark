@@ -450,9 +450,11 @@ typedef struct
 #define  LCD_PIXEL_HEIGHT      ((uint16_t)480)
 
 #define LCD_FRAME_BUFFER       ((uint32_t)0xD0000000)
-#define BUFFER_OFFSET          ((uint32_t)800*480*2)
+#define BUFFER_OFFSET          ((uint32_t)800*480*2)  // 768000  byte
+//bit 110111111111
+//1byte  =  8 bit
 
-
+// 32 * 1024 * 1024 / 8 =  4194304  byte
 /**
   * @brief  LCD color
   */

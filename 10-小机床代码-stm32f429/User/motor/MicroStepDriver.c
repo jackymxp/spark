@@ -3,7 +3,6 @@
 #include <math.h>
 #include "./led/bsp_led.h"
 
-int stepPosition = 0;
 
 /**
 
@@ -98,7 +97,7 @@ static void MSD_GPIO_Config(void)
 // PWM 信号的周期 T = (ARR+1) * (1/CLK_cnt) = (ARR+1)*(PSC+1) / 72M
 // 占空比P=CCR/(ARR+1)
 
-static void TIM_Mode_Config(uint32_t pulseTime)
+void MotorSetSpeed(uint32_t pulseTime)
 {
   // 开启定时器时钟,即内部时钟CK_INT=180M
 	MSD_PULSE_TIM_APBxClock_FUN(MSD_PULSE_TIM_CLK,ENABLE);
@@ -128,28 +127,45 @@ static void TIM_Mode_Config(uint32_t pulseTime)
 	// 互补输出禁能
 	TIM_OCInitStructure.TIM_OutputNState = TIM_OutputNState_Disable; 
 	// 设置占空比大小
-	TIM_OCInitStructure.TIM_Pulse = (pulseTime>>1) - 1; //是高电平所占据的时间
+	TIM_OCInitStructure.TIM_Pulse = (pulseTime >> 1) - 1; //是高电平所占据的时间  
 	// 输出通道电平极性配置
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
 	// 输出通道空闲电平极性配置
 	TIM_OCInitStructure.TIM_OCIdleState = TIM_OCIdleState_Reset;
     
 	MSD_PULSE_OCx_Init(MSD_PULSE_TIM, &TIM_OCInitStructure);
-    //使能TIM1_CH1预装载寄存器
+	
+	
+#if 0	
+	//使能TIM1_CH1预装载寄存器
 	MSD_PULSE_OCx_PreloadConfig(MSD_PULSE_TIM, TIM_OCPreload_Enable);
-   
 
 	//使能TIM1预装载寄存器
-    TIM_ARRPreloadConfig(MSD_PULSE_TIM, ENABLE); 
-    //设置中断源，只有溢出时才中断
-    TIM_UpdateRequestConfig(MSD_PULSE_TIM,TIM_UpdateSource_Regular);
-	// 清除中断标志位
+	TIM_ARRPreloadConfig(MSD_PULSE_TIM, ENABLE); 
+	//设置中断源，只有溢出时才中断
+	TIM_UpdateRequestConfig(MSD_PULSE_TIM,TIM_UpdateSource_Regular);
+	//清除中断标志位
 	TIM_ClearITPendingBit(MSD_PULSE_TIM, TIM_IT_Update);
-    // 使能中断
-    TIM_ITConfig(MSD_PULSE_TIM, TIM_IT_Update, ENABLE);
-	// 使能计数器
-	TIM_Cmd(MSD_PULSE_TIM, ENABLE);
+	//使能中断
+	TIM_ITConfig(MSD_PULSE_TIM, TIM_IT_Update, ENABLE);
+#endif
 }
+
+
+
+
+void Motor_Cmd(FunctionalState NewState)
+{
+	TIM_Cmd(MSD_PULSE_TIM, NewState);
+}
+
+void MotorSetDir(Dir direction)
+{
+	DIR(direction);
+}
+
+
+
 /**
 
   * @brief  初始化电机相关的外设
@@ -159,13 +175,13 @@ static void TIM_Mode_Config(uint32_t pulseTime)
   * @retval 无
 
   */
-void Motor_Config(uint32_t pulseTime)
+void Motor_Config()
 {
     MSD_GPIO_Config();
     
     TIM_NVIC_Config();
 
-    TIM_Mode_Config(pulseTime);    
+   // TIM_Mode_Config();    
 }
 /**
 
@@ -197,26 +213,8 @@ void MSD_ENA(FunctionalState NewState)
     
 }
 
-/**
 
-  * @brief  根据运动方向判断步进电机的运行位置
 
-  * @param  inc 运动方向
 
-  * @retval 无
-
-  */
-void MSD_StepCounter(signed char inc)
-{
-  //根据方向判断电机位置
-  if(inc == CCW)
-  {
-    stepPosition--;
-  }
-  else
-  {
-    stepPosition++;
-  }
-}
 
 /*********************************************END OF FILE**********************/

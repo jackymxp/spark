@@ -14,7 +14,7 @@
 
 extern SystemState CurrState;
 
-void Delay(uint32_t ms)
+static void Delay(uint32_t ms)
 {
 	while(--ms);
 }
@@ -52,18 +52,18 @@ int main(void)
 	/*调用画板函数*/
 	Palette_Init();
 
-
-
-	
-	/* 步进电机引脚初始化 */
-	Motor_Config(CurrState.MotorState.MSDSpeed);
-	
 	/* 初始化采样的定时器，默认一秒钟中断1000次*/
 	Sample_TIM_Configuration(CurrState.DischargeCount.interruptFrequency);
 
 	SpindleAndCoolant_GPIO_Config();
+
+	/* 步进电机引脚初始化 */
+	Motor_Config();
+	
+
 	while(1)
 	{
+		
 		Scan_System();	
 		//Delay(0xffffff);
 	}

@@ -219,6 +219,8 @@ void GTP_IRQHandler(void)
 	}  
 }
 
+
+
 void  SAMPLE_BASIC_TIM_IRQHandler (void)
 {
 	static uint32_t interrupt_count = 0;
@@ -296,9 +298,7 @@ void  SAMPLE_BASIC_TIM_IRQHandler (void)
 	}		 	
 }
 
-
-
-
+#if 0
 /**
   * @brief  产生脉冲定时器的中断响应程序，每走一步都会计算运动状态，每发出一个脉冲就会进入这个中断一次
   * @param  无
@@ -308,10 +308,6 @@ void MSD_PULSE_TIM_IRQHandler(void)
 {
 	if (TIM_GetITStatus(MSD_PULSE_TIM, TIM_IT_Update) != RESET)
 	{
-		//只有处于自动加工的时候
-		if(CurrState.MotorState.MSDMode == MSD_PLUSE)
-			CurrState.MotorState.MSDStep--;
-		
 		/* Clear MSD_PULSE_TIM Capture Compare1 interrupt pending bit*/
 		TIM_ClearITPendingBit(MSD_PULSE_TIM, TIM_IT_Update);
 		//这句话有待考察。。。。我们使用的是通道1。。。。设置脉宽的占空比
@@ -320,6 +316,8 @@ void MSD_PULSE_TIM_IRQHandler(void)
 		TIM_SetAutoreload(MSD_PULSE_TIM , CurrState.MotorState.MSDSpeed);
 	}
 }
+
+#endif
 
 
 

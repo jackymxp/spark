@@ -6,6 +6,7 @@
 
 
 #define DEBUG_USART                             USART1
+#define RCC_APBxPeriphClockCmd					RCC_APB2PeriphClockCmd
 #define DEBUG_USART_CLK                         RCC_APB2Periph_USART1
 #define DEBUG_USART_BAUDRATE                    115200
 
@@ -27,7 +28,7 @@
 #define INFO(fmt,arg...)           printf("<<-INFO->> "fmt"\n",##arg)
 #define ERROR(fmt,arg...)          printf("<<-ERROR->> "fmt"\n",##arg)
 #define printk(fmt,arg...)          do{\
-                                         if(GTP_DEBUG_ON)\
+                                         if(DEBUG_ON)\
                                          printf("<<-DEBUG->> %s-->>%d-->>"fmt"\n", __func__, __LINE__, ##arg);\
 																					}while(0)
 
