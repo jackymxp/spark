@@ -83,8 +83,8 @@ void Coolant_Cmd(FunctionalState NewState)
 
 void Scan_System(void)
 {
-	//Coolant_Cmd(CurrState.CoolantState);
-	//Spindle_Cmd(CurrState.SpindleState);
+	Coolant_Cmd(CurrState.CoolantState);
+	Spindle_Cmd(CurrState.SpindleState);
 	
 	//非自动加工
 	if(CurrState.AutoWorking == DISABLE)

@@ -14,10 +14,7 @@
 
 extern SystemState CurrState;
 
-static void Delay(uint32_t ms)
-{
-	while(--ms);
-}
+
 /**
   * @brief  Ö÷º¯Êý
   * @param  ÎÞ
